@@ -13,8 +13,8 @@ import {
   FileText, 
   Settings,
   Building,
-  PiggyBank,
-  BarChart4 
+  BarChart4,
+  LineChart
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -63,7 +63,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, closeSidebar }) => {
       <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
         <Link to="/" className="flex items-center space-x-2">
           <div className="bg-primary rounded-md w-8 h-8 flex items-center justify-center">
-            <PiggyBank className="h-5 w-5 text-primary-foreground" />
+            <LineChart className="h-5 w-5 text-primary-foreground" />
           </div>
           <span className="font-semibold text-lg">PineFi</span>
         </Link>
