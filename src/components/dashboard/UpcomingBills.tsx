@@ -70,67 +70,80 @@ const UpcomingBills = () => {
   const paidBills = bills.filter(bill => bill.status === 'paid');
 
   return (
-    <Card className="animate-in">
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
+    <Card className="h-full animate-in">
+      <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
         <div>
           <CardTitle>Upcoming Bills</CardTitle>
           <CardDescription>Keep track of your bills and payments</CardDescription>
         </div>
-        <Button variant="outline" size="sm">
+        <Button variant="outline" size="sm" className="h-8 whitespace-nowrap">
           <Calendar className="h-4 w-4 mr-2" />
           View Calendar
         </Button>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="upcoming" className="w-full">
-          <TabsList className="mb-4 grid grid-cols-3">
-            <TabsTrigger value="upcoming">
+          <TabsList className="mb-4 grid grid-cols-3 h-9">
+            <TabsTrigger value="upcoming" className="text-xs sm:text-sm">
               Upcoming
               {upcomingBills.length > 0 && (
-                <Badge variant="secondary" className="ml-2">
+                <Badge variant="secondary" className="ml-1 sm:ml-2 px-1 py-0 h-5 min-w-5 flex items-center justify-center">
                   {upcomingBills.length}
                 </Badge>
               )}
             </TabsTrigger>
-            <TabsTrigger value="overdue">
+            <TabsTrigger value="overdue" className="text-xs sm:text-sm">
               Overdue
               {overdueBills.length > 0 && (
-                <Badge variant="destructive" className="ml-2">
+                <Badge variant="destructive" className="ml-1 sm:ml-2 px-1 py-0 h-5 min-w-5 flex items-center justify-center">
                   {overdueBills.length}
                 </Badge>
               )}
             </TabsTrigger>
-            <TabsTrigger value="paid">
+            <TabsTrigger value="paid" className="text-xs sm:text-sm">
               Paid
               {paidBills.length > 0 && (
-                <Badge variant="outline" className="ml-2">
+                <Badge variant="outline" className="ml-1 sm:ml-2 px-1 py-0 h-5 min-w-5 flex items-center justify-center">
                   {paidBills.length}
                 </Badge>
               )}
             </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="upcoming" className="space-y-3">
-            {upcomingBills.map(bill => (
-              <BillCard key={bill.id} bill={bill} />
-            ))}
+          <TabsContent value="upcoming" className="space-y-3 mt-0">
+            {upcomingBills.length > 0 ? (
+              upcomingBills.map(bill => (
+                <BillCard key={bill.id} bill={bill} />
+              ))
+            ) : (
+              <div className="text-center py-6 text-muted-foreground">
+                No upcoming bills.
+              </div>
+            )}
           </TabsContent>
           
-          <TabsContent value="overdue" className="space-y-3">
-            {overdueBills.map(bill => (
-              <BillCard key={bill.id} bill={bill} />
-            ))}
-            {overdueBills.length === 0 && (
+          <TabsContent value="overdue" className="space-y-3 mt-0">
+            {overdueBills.length > 0 ? (
+              overdueBills.map(bill => (
+                <BillCard key={bill.id} bill={bill} />
+              ))
+            ) : (
               <div className="text-center py-6 text-muted-foreground">
                 No overdue bills. Great job!
               </div>
             )}
           </TabsContent>
           
-          <TabsContent value="paid" className="space-y-3">
-            {paidBills.map(bill => (
-              <BillCard key={bill.id} bill={bill} />
-            ))}
+          <TabsContent value="paid" className="space-y-3 mt-0">
+            {paidBills.length > 0 ? (
+              paidBills.map(bill => (
+                <BillCard key={bill.id} bill={bill} />
+              ))
+            ) : (
+              <div className="text-center py-6 text-muted-foreground">
+                No paid bills yet.
+              </div>
+            )}
           </TabsContent>
         </Tabs>
       </CardContent>
@@ -144,40 +157,41 @@ interface BillCardProps {
 
 const BillCard = ({ bill }: BillCardProps) => {
   return (
-    <div className="flex items-center justify-between p-3 border rounded-lg">
-      <div className="flex items-center gap-3">
-        <div className={`p-2 rounded-full ${
+    <div className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+      <div className="flex items-center gap-3 min-w-0">
+        <div className={`p-2 rounded-full flex-shrink-0 ${
           bill.status === 'overdue' ? 'bg-red-100 text-red-600' :
           bill.status === 'paid' ? 'bg-green-100 text-green-600' :
           'bg-blue-100 text-blue-600'
         }`}>
           {bill.icon}
         </div>
-        <div>
-          <div className="flex items-center">
-            <p className="font-medium text-sm">{bill.name}</p>
+        <div className="min-w-0">
+          <div className="flex items-center flex-wrap gap-1">
+            <p className="font-medium text-sm truncate">{bill.name}</p>
             {bill.autoPay && (
-              <Badge variant="outline" className="ml-2 text-xs">Auto-pay</Badge>
+              <Badge variant="outline" className="text-xs px-1 h-5">Auto-pay</Badge>
             )}
           </div>
           <div className="flex items-center text-xs text-muted-foreground">
             {bill.status === 'overdue' ? (
-              <Clock className="h-3 w-3 mr-1 text-red-500" />
+              <Clock className="h-3 w-3 mr-1 text-red-500 flex-shrink-0" />
             ) : bill.status === 'paid' ? (
-              <CheckCircle className="h-3 w-3 mr-1 text-green-500" />
+              <CheckCircle className="h-3 w-3 mr-1 text-green-500 flex-shrink-0" />
             ) : (
-              <Calendar className="h-3 w-3 mr-1" />
+              <Calendar className="h-3 w-3 mr-1 flex-shrink-0" />
             )}
-            Due {bill.dueDate}
+            <span className="truncate">Due {bill.dueDate}</span>
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-3">
-        <span className="font-medium">${bill.amount.toFixed(2)}</span>
+      <div className="flex items-center gap-2 flex-shrink-0">
+        <span className="font-medium text-sm whitespace-nowrap">${bill.amount.toFixed(2)}</span>
         <Button 
           size="sm" 
           variant={bill.status === 'paid' ? 'outline' : 'default'}
           disabled={bill.status === 'paid'}
+          className="h-8 px-2 sm:px-3"
         >
           {bill.status === 'paid' ? 'Paid' : 'Pay Now'}
         </Button>

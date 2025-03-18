@@ -23,7 +23,7 @@ const Index = () => {
         <div className="lg:col-span-2">
           <FinancialOverview />
         </div>
-        <div className="lg:col-span-1 space-y-6">
+        <div className="lg:col-span-1 flex flex-col gap-6">
           <TransactionForm />
           <ChatAssistant />
         </div>
@@ -33,7 +33,7 @@ const Index = () => {
         <div className="lg:col-span-2">
           <TransactionList />
         </div>
-        <div className="lg:col-span-1 space-y-6">
+        <div className="lg:col-span-1 flex flex-col gap-6">
           <UpcomingBills />
           <SavingsGoals />
         </div>
