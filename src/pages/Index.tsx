@@ -7,6 +7,7 @@ import UpcomingBills from '@/components/dashboard/UpcomingBills';
 import SavingsGoals from '@/components/dashboard/SavingsGoals';
 import ChatAssistant from '@/components/dashboard/ChatAssistant';
 import TransactionForm from '@/components/dashboard/TransactionForm';
+import DailyReminderCard from '@/components/dashboard/DailyReminderCard';
 
 const Index = () => {
   return (
@@ -15,6 +16,8 @@ const Index = () => {
         <h1 className="text-3xl font-bold">Hello, Taylor!</h1>
         <p className="text-muted-foreground">Welcome back to your PineFi dashboard</p>
       </div>
+
+      <DailyReminderCard />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         <div className="lg:col-span-2">
