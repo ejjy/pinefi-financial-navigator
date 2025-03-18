@@ -1,0 +1,11 @@
+
+# Build settings
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Redirects for React Router
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
