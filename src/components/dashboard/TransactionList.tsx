@@ -14,11 +14,12 @@ import {
   Car, 
   Coffee, 
   Utensils, 
-  Smartphone, 
+  Smartphone,
   MoreVertical,
   Calendar,
   Filter
 } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface Transaction {
   id: number;
@@ -88,6 +89,36 @@ const transactions: Transaction[] = [
 ];
 
 const TransactionList = () => {
+  const { toast } = useToast();
+  
+  const handleViewDetails = (transaction: Transaction) => {
+    toast({
+      title: "Transaction Details",
+      description: `Viewing details for ${transaction.name}`,
+    });
+  };
+  
+  const handleEditCategory = (transaction: Transaction) => {
+    toast({
+      title: "Edit Category",
+      description: `Editing category for ${transaction.name}`,
+    });
+  };
+  
+  const handleAddToBudget = (transaction: Transaction) => {
+    toast({
+      title: "Add to Budget",
+      description: `Added ${transaction.name} to budget planning`,
+    });
+  };
+  
+  const handleDownloadReceipt = (transaction: Transaction) => {
+    toast({
+      title: "Download Receipt",
+      description: "This feature is coming soon!",
+    });
+  };
+
   return (
     <Card className="animate-in">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -109,7 +140,11 @@ const TransactionList = () => {
       <CardContent>
         <div className="space-y-4">
           {transactions.map((transaction) => (
-            <div key={transaction.id} className="flex items-center justify-between p-2 hover:bg-muted/50 rounded-md transition-colors">
+            <div 
+              key={transaction.id} 
+              className="flex items-center justify-between p-2 hover:bg-muted/50 rounded-md transition-colors cursor-pointer"
+              onClick={() => handleViewDetails(transaction)}
+            >
               <div className="flex items-center gap-3">
                 <div className={`p-2 rounded-full ${
                   transaction.type === 'expense' ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'
@@ -129,15 +164,28 @@ const TransactionList = () => {
                 </span>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="h-8 w-8"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <MoreVertical className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem>View Details</DropdownMenuItem>
-                    <DropdownMenuItem>Edit Category</DropdownMenuItem>
-                    <DropdownMenuItem>Add to Budget</DropdownMenuItem>
-                    <DropdownMenuItem>Download Receipt</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleViewDetails(transaction)}>
+                      View Details
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleEditCategory(transaction)}>
+                      Edit Category
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleAddToBudget(transaction)}>
+                      Add to Budget
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleDownloadReceipt(transaction)}>
+                      Download Receipt
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>

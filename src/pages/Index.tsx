@@ -6,6 +6,7 @@ import TransactionList from '@/components/dashboard/TransactionList';
 import UpcomingBills from '@/components/dashboard/UpcomingBills';
 import SavingsGoals from '@/components/dashboard/SavingsGoals';
 import ChatAssistant from '@/components/dashboard/ChatAssistant';
+import TransactionForm from '@/components/dashboard/TransactionForm';
 
 const Index = () => {
   return (
@@ -19,7 +20,8 @@ const Index = () => {
         <div className="lg:col-span-2">
           <FinancialOverview />
         </div>
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 space-y-6">
+          <TransactionForm />
           <ChatAssistant />
         </div>
       </div>
