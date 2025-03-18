@@ -1,9 +1,9 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { MessageSquare, ArrowRight, Bot, User, Sparkles } from 'lucide-react';
+import { MessageSquare, ArrowRight, Bot, User, Sparkles, Lightbulb } from 'lucide-react';
 
 interface Message {
   id: number;
@@ -18,10 +18,19 @@ const ChatAssistant = () => {
     {
       id: 1,
       sender: 'ai',
-      text: "Hello! I'm your PineFi financial assistant. How can I help you today?",
+      text: "Hello! I'm your PineFi assistant. How can I help with your finances today?",
       timestamp: new Date()
     }
   ]);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const handleSendMessage = () => {
     if (!input.trim()) return;
@@ -34,17 +43,17 @@ const ChatAssistant = () => {
       timestamp: new Date()
     };
     
-    setMessages([...messages, userMessage]);
+    setMessages(prev => [...prev, userMessage]);
     setInput('');
 
     // Simulate AI response
     setTimeout(() => {
       const responses = [
-        "Based on your spending patterns, you could save around $120 this month by reducing restaurant expenses.",
+        "Based on your spending, you could save around $120 this month by reducing restaurant expenses.",
         "You've spent $347 on food this month, which is 15% higher than last month.",
         "Your electricity bill is due in 3 days. Would you like me to set a reminder?",
         "You've achieved 85% of your monthly savings goal. Great job!",
-        "I've analyzed your expenses and found a subscription service you're not using. Would you like details?"
+        "I found a subscription you might not be using. Would you like details?"
       ];
 
       const aiMessage: Message = {
@@ -64,23 +73,29 @@ const ChatAssistant = () => {
     }
   };
 
+  const suggestedQuestions = [
+    "How much did I spend on groceries?",
+    "What are my recurring bills?",
+    "How can I improve my savings?"
+  ];
+
   return (
-    <Card className="h-full flex flex-col animate-in">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+    <Card className="h-full flex flex-col animate-in shadow-md">
+      <CardHeader className="pb-2">
+        <CardTitle className="flex items-center gap-2 text-xl">
           <Sparkles className="h-5 w-5 text-primary" />
           AI Financial Assistant
         </CardTitle>
-        <CardDescription>Ask questions about your finances</CardDescription>
+        <CardDescription>Get personalized financial insights</CardDescription>
       </CardHeader>
-      <CardContent className="flex-grow overflow-auto">
+      <CardContent className="flex-grow overflow-auto px-4 pt-0">
         <div className="space-y-4">
           {messages.map((message) => (
             <div
               key={message.id}
               className={`flex items-start gap-2.5 ${
                 message.sender === 'user' ? 'justify-end' : ''
-              }`}
+              } animate-fade-in`}
             >
               {message.sender === 'ai' && (
                 <div className="flex-shrink-0 bg-primary/10 p-1.5 rounded-full text-primary">
@@ -106,9 +121,34 @@ const ChatAssistant = () => {
               )}
             </div>
           ))}
+          <div ref={messagesEndRef} />
+          
+          {messages.length === 1 && (
+            <div className="pt-4 animate-fade-in">
+              <p className="text-sm text-muted-foreground mb-2 flex items-center">
+                <Lightbulb className="h-4 w-4 mr-1" /> 
+                Suggested questions:
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {suggestedQuestions.map((question, index) => (
+                  <Button 
+                    key={index} 
+                    variant="outline" 
+                    size="sm" 
+                    className="text-xs"
+                    onClick={() => {
+                      setInput(question);
+                    }}
+                  >
+                    {question}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </CardContent>
-      <CardFooter className="pt-4 border-t">
+      <CardFooter className="pt-3 border-t">
         <div className="flex w-full gap-2">
           <Input
             placeholder="Ask about your finances..."
@@ -117,7 +157,7 @@ const ChatAssistant = () => {
             onKeyDown={handleKeyDown}
             className="flex-grow"
           />
-          <Button onClick={handleSendMessage} size="icon">
+          <Button onClick={handleSendMessage} size="icon" className="shrink-0">
             <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
