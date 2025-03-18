@@ -1,13 +1,39 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React from 'react';
+import MainLayout from '@/components/layout/MainLayout';
+import FinancialOverview from '@/components/dashboard/FinancialOverview';
+import TransactionList from '@/components/dashboard/TransactionList';
+import UpcomingBills from '@/components/dashboard/UpcomingBills';
+import SavingsGoals from '@/components/dashboard/SavingsGoals';
+import ChatAssistant from '@/components/dashboard/ChatAssistant';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <MainLayout>
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold">Hello, Taylor!</h1>
+        <p className="text-muted-foreground">Welcome back to your PineFi dashboard</p>
       </div>
-    </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div className="lg:col-span-2">
+          <FinancialOverview />
+        </div>
+        <div className="lg:col-span-1">
+          <ChatAssistant />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div className="lg:col-span-2">
+          <TransactionList />
+        </div>
+        <div className="lg:col-span-1 space-y-6">
+          <UpcomingBills />
+          <SavingsGoals />
+        </div>
+      </div>
+    </MainLayout>
   );
 };
 
