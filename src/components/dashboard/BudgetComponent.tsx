@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
-import { PieChart, PieChartData, Plus, Filter, AlertTriangle, BarChart, ArrowUpRight } from 'lucide-react';
+import { PieChart, Plus, Filter, AlertTriangle, BarChart, ArrowUpRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 // Mock data - will be replaced with actual data from Firebase

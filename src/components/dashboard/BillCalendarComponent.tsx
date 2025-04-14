@@ -101,10 +101,13 @@ const BillCalendarComponent = () => {
                 billDay: (date) => isDayWithBill(date),
               }}
               styles={{
-                day_billDay: {
-                  fontWeight: 'bold',
-                  border: '1px solid hsl(var(--primary))',
-                  borderRadius: '50%'
+                day: {
+                  // Apply styles to days with bills
+                  "&[data-state='billDay']": {
+                    fontWeight: 'bold',
+                    border: '1px solid hsl(var(--primary))',
+                    borderRadius: '50%'
+                  }
                 }
               }}
             />
