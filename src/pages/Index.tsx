@@ -8,6 +8,9 @@ import SavingsGoals from '@/components/dashboard/SavingsGoals';
 import ChatAssistant from '@/components/dashboard/ChatAssistant';
 import TransactionForm from '@/components/dashboard/TransactionForm';
 import DailyReminderCard from '@/components/dashboard/DailyReminderCard';
+import BudgetComponent from '@/components/dashboard/BudgetComponent';
+import SavingComponent from '@/components/dashboard/SavingComponent';
+import BillCalendarComponent from '@/components/dashboard/BillCalendarComponent';
 
 const Index = () => {
   return (
@@ -31,11 +34,26 @@ const Index = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         <div className="lg:col-span-2">
-          <TransactionList />
+          <BudgetComponent />
         </div>
+        <div className="lg:col-span-1">
+          <SavingComponent />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         <div className="lg:col-span-1 flex flex-col gap-6">
           <UpcomingBills />
           <SavingsGoals />
+        </div>
+        <div className="lg:col-span-2">
+          <BillCalendarComponent />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div className="lg:col-span-2">
+          <TransactionList />
         </div>
       </div>
     </MainLayout>
