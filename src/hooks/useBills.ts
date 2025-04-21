@@ -1,9 +1,10 @@
+
 import { useState } from 'react';
 import { startOfToday, isSameDay, addDays } from 'date-fns';
 import { Bill } from '@/types/bill.types';
 
 // Mock bill data - will be replaced with actual data from Firebase
-const mockBills = [
+const mockBills: Bill[] = [
   { 
     id: '1', 
     name: 'Rent', 
