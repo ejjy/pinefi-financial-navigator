@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar } from '@/components/ui/calendar';
@@ -96,19 +95,14 @@ const BillCalendarComponent = () => {
               className="w-full"
               modifiersStyles={{
                 selected: { backgroundColor: 'hsl(var(--primary))', color: 'white' },
+                billDay: { 
+                  fontWeight: 'bold',
+                  border: '1px solid hsl(var(--primary))',
+                  borderRadius: '50%'
+                }
               }}
               modifiers={{
                 billDay: (date) => isDayWithBill(date),
-              }}
-              styles={{
-                day: {
-                  // Apply styles to days with bills
-                  "&[data-state='billDay']": {
-                    fontWeight: 'bold',
-                    border: '1px solid hsl(var(--primary))',
-                    borderRadius: '50%'
-                  }
-                }
               }}
             />
           </div>
